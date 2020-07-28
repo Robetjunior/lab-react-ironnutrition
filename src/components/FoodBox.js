@@ -1,33 +1,50 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-function FoodBox() {
+function FoodBox(props) {
+  const [quantity, setQuantity] = useState(props.quantity);
+
+  function handleChange(event) {
+    setQuantity(event.currentTarget.value);
+  }
+
   return (
-    <div className="box">
-      <article className="media">
-        <div className="media-left">
-          <figure className="image is-64x64">
-            <img src="https://i.imgur.com/eTmWoAN.png" alt="l" />
-          </figure>
-        </div>
-        <div className="media-content">
-          <div className="content">
-            <p>
-              <strong>Pizza</strong> <br />
-              <small>400 cal</small>
-            </p>
+    <div className="food-box shadow-sm">
+      <div className="picture-container">
+        <img
+          className="food-picture"
+          src={props.image}
+          alt={`A ${props.name}`}
+        />
+      </div>
+
+      <div className="">
+        <strong>{props.name}</strong>
+        <span className="d-block">{props.calories} cal</span>
+      </div>
+      <div className="d-inline-block">
+        <div className="input-group h-100">
+          <input
+            type="number"
+            className="quantity-input"
+            aria-label="Recipient's username"
+            aria-describedby="button-addon2"
+            value={quantity}
+            onChange={handleChange}
+          />
+          <div className="input-group-append">
+            <button
+              className="btn btn-primary btn-lg"
+              type="button"
+              id="button-addon2"
+              onClick={() => {
+                return props.addFood({ ...props, quantity: quantity });
+              }}
+            >
+              +
+            </button>
           </div>
         </div>
-        <div className="media-right">
-          <div className="field has-addons">
-            <div className="control">
-              <input className="input" type="number" value="1" />
-            </div>
-            <div className="control">
-              <button className="button is-info">+</button>
-            </div>
-          </div>
-        </div>
-      </article>
+      </div>
     </div>
   );
 }
